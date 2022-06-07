@@ -15,34 +15,34 @@ To run docker compose file use below commands.
   
 ## Below is the dockerfile that contains instructions on building a docker image.
   
-#Install node version image in dockerfile
+**Install node version image in dockerfile
 FROM node:8.9.4-alpine
 
-#Set work directory for dockerfile
+**Set work directory for dockerfile
 ARG WORK_DIR=/frontend-application
 
-#Add enivormental variable to add modules in /bin, which is useful to run ng serve.
+**Add enivormental variable to add modules in /bin, which is useful to run ng serve.
 ENV PATH ${WORK_DIR}/node_modules/.bin:$PATH
 
-#For making root to frontend and set work directory.
+**For making root to frontend and set work directory.
 RUN mkdir ${WORK_DIR}
 WORKDIR ${WORK_DIR}
 
-#Copying packages files from local to container.
+**Copying packages files from local to container.
 COPY package.json ${WORK_DIR}
 COPY package-lock.json ${WORK_DIR}
 
-#Installing npm to install dependencies.
+**Installing npm to install dependencies.
 RUN npm install
 
-#Run ng build for production.
+Run ng build for production.
 RUN npm run build --prod
 
-#Copying wrk_dir after npm to update only the source files instead of depndencies.
+**Copying wrk_dir after npm to update only the source files instead of depndencies.
 COPY . ${WORK_DIR}
 
-#Expose port for angular
+**Expose port for angular
 EXPOSE 80
 
-#host ng serve
+**host ng serve
 CMD ng serve --host 0.0.0.0
