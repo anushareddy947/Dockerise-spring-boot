@@ -1,0 +1,39 @@
+version: '3.4'
+
+#Define the service/containers to be run
+services:
+#1. Backend application container
+  backend-application-service: #name of the first service
+    build: ./ #specify
+    container_name: backend-application
+    ports:
+      - "8080:8080" #specify port for mapping
+    volumes:
+      - ./:/backend-application #set volume path to run production
+
+#2. Frontend application container
+  frontend-application-service:
+      build: ./ 
+      container_name: frontend-application
+      volumes:
+        - './:/usr/src/frontend-application'
+      ports:
+         - "4200:80"
+
+#3. Backend Ecommerce docker container 
+  baeldung-ecommerce-service:
+    build: ./
+    container_name: backend-ecommerce
+    ports:
+      - "8085:8085"
+    volumes:
+      - ./:/backend-ecommerce
+
+#4. Frontend Ecommerce container
+  frontend-baeldung-ecommerce:
+    container_name: ecommerce-container
+    build: ./src/main/js/application 
+    volumes:
+      - './:/usr/src/frontend-ecommerce'
+    ports:
+      - "4202:85"
